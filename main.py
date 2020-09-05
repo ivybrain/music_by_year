@@ -1,16 +1,23 @@
-# This is a sample Python script.
+from flask import Flask, render_template
+import requests
+import os
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+app = Flask(__name__)
 
+@app.route("/")
+def home():
+    auth_link = "http://www.last.fm/api/auth/?api_key=" + os.environ['LASTFM_KEY']
+    return render_template('home.html', auth_link=auth_link)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+@app.route("/auth_callback")
+def auth_callback(token):
+    return token
 
+def api_auth():
+    return
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    app.run(debug=True)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
